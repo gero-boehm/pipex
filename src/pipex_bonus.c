@@ -6,7 +6,7 @@
 /*   By: gbohm <gbohm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:44:18 by gbohm             #+#    #+#             */
-/*   Updated: 2023/04/26 10:33:27 by gbohm            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:14:10 by gbohm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,20 @@ int	main(int argc, char **argv, char *const *envp)
 
 	if (envp == NULL)
 		return (1);
+	if (argc < 2)
+		return (ft_fdprintf(2, "pipex: incorrect argument count\n"), 2);
 	is_here_doc = ft_streq(argv[1], "here_doc");
 	if (is_here_doc)
 	{
 		if (argc < 4)
 			return (ft_fdprintf(2, "pipex: must have at least here_doc, "
-					"limiter and outfile"), 2);
+					"limiter and outfile\n"), 3);
 		if (get_here_doc(argv[2]))
-			return (3);
+			return (4);
 	}
 	else if (argc < 3)
 		return (ft_fdprintf(2, "pipex: must have at least "
-				"infile and outfile"), 4);
+				"infile and outfile\n"), 5);
 	get_infile(argv[1], &infile);
 	run(infile, is_here_doc, argv, envp);
 	unlink("here_doc");
