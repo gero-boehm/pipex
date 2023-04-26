@@ -1,32 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbohm <gbohm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 15:44:18 by gbohm             #+#    #+#             */
-/*   Updated: 2023/04/26 11:24:59 by gbohm            ###   ########.fr       */
+/*   Created: 2023/04/26 11:19:04 by gbohm             #+#    #+#             */
+/*   Updated: 2023/04/26 11:22:46 by gbohm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "pipex.h"
-#include "ft_printf.h"
 
-int	main(int argc, char **argv, char *const *envp)
+void	free_str_array(t_array *strs)
 {
-	int	infile;
+	unsigned long	i;
+	char			*str;
 
-	if (argc != 5)
+	i = 0;
+	while (i < strs->size)
 	{
-		ft_fdprintf(2, "pipex: incorrect argument count\n");
+		str = *(char **) get_element_at(strs, i);
+		free(str);
+		i++;
+	}
+	free_array(strs);
+}
+
+int	reduce_backslashes(char **str)
+{
+	size_t	len;
+
+	len = ft_strlen(*str) / 2;
+	if (ft_chrrep2('\\', len, str))
+		return (1);
+	return (0);
+}
+
+int	toggle_quotes(char *quote, char token)
+{
+	if (*quote == 0)
+	{
+		*quote = token;
 		return (1);
 	}
-	if (envp == NULL)
-		return (2);
-	get_infile(argv[1], &infile);
-	run(infile, 0, argv, envp);
+	else if (token == *quote)
+	{
+		*quote = 0;
+		return (1);
+	}
 	return (0);
 }

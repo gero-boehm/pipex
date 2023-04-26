@@ -6,7 +6,7 @@
 /*   By: gbohm <gbohm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:33:08 by gbohm             #+#    #+#             */
-/*   Updated: 2023/04/20 18:23:11 by gbohm            ###   ########.fr       */
+/*   Updated: 2023/04/25 18:17:21 by gbohm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,23 @@ int	get_command_path(char *cmd, char *const *envp, char **path)
 
 	if (is_local(cmd))
 	{
-		*path = cmd;
+		if (ft_strdup2(cmd, path))
+			return (1);
 		return (0);
 	}
 	if (get_paths(envp, &paths))
-		return (1);
+		return (2);
 	cursor = paths;
 	while (*cursor)
 	{
 		if (build_path(*cursor++, cmd, path))
-			return (ft_free2d((void **) paths), 2);
+			return (ft_free2d((void **) paths), 3);
 		if (access(*path, F_OK))
 		{
 			free(*path);
 			continue ;
 		}
-		ft_free2d((void **) paths);
-		return (0);
+		return (ft_free2d((void **) paths), 0);
 	}
-	ft_free2d((void **) paths);
-	return (3);
+	return (ft_free2d((void **) paths), 4);
 }

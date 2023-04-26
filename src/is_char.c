@@ -6,17 +6,21 @@
 /*   By: gbohm <gbohm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 13:30:16 by gbohm             #+#    #+#             */
-/*   Updated: 2023/02/07 13:32:16 by gbohm            ###   ########.fr       */
+/*   Updated: 2023/04/26 10:36:11 by gbohm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\r'
-		|| c == '\n' || c == '\v' || c == '\f');
-}
 
 int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
+}
+
+int	is_backslash(char c)
+{
+	return (c == '\\');
+}
+
+int	is_space(char c)
+{
+	return (c == ' ');
 }
