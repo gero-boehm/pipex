@@ -6,7 +6,7 @@
 /*   By: gbohm <gbohm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:12:05 by gbohm             #+#    #+#             */
-/*   Updated: 2023/04/25 18:19:58 by gbohm            ###   ########.fr       */
+/*   Updated: 2023/04/26 15:30:30 by gbohm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int	run(int fd, int is_here_doc, char **argv, char *const *envp)
 		else
 			run_parent(&fd, ports);
 	}
-	while (i-- - is_here_doc - 2)
-		waitpid(0, NULL, 0);
 	if (output(argv[argc - 1], fd, is_here_doc))
 		return (ft_fdprintf(2, "pipex: error writing to outfile\n"), 2);
+	while (i-- - is_here_doc - 2)
+		waitpid(0, NULL, 0);
 	close(fd);
 	return (0);
 }
